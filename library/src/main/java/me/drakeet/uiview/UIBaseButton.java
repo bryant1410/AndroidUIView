@@ -1,4 +1,4 @@
-package me.drakeet.library;
+package me.drakeet.uiview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
