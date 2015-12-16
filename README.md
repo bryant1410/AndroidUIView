@@ -29,9 +29,9 @@ dependencies {
 
 ```xml
 <dependency>
-    <groupId>me.drakeet.library</groupId>
+    <groupId>me.drakeet.uiview</groupId>
     <artifactId>androiduiview</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 </dependency>
 ```
 
