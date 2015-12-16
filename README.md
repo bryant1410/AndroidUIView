@@ -23,7 +23,7 @@ Hope you will like it :)
 ####Gradle & Maven
 ```groovy
 dependencies {
-    compile 'me.drakeet.library:androiduiview:1.1.2'
+    compile 'me.drakeet.uiview:androiduiview:1.1.3'
 }
 ```
 
