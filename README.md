@@ -97,9 +97,11 @@ If set a selector.xml to background, it may perform perfectly...
 
 ## About me
 
-My blog: http://drakeet.me
+I am a student in China, I love reading pure literature, love Japanese culture and Hongkong music. At the same time, I am also obsessed with writing code. If you have any questions or want to make friends with me, you can write to me: drakeet.me@gmail.com
 
-More about me: http://drakeet.me/about
+In addition, my blog: http://drakeet.me
+
+If you like my open source projects, you can follow me: https://github.com/drakeet
 
 License
 ============
