@@ -16,8 +16,11 @@ import android.widget.Button;
  */
 public class UIBaseButton extends Button {
 
-    protected int WIDTH;
-    protected int HEIGHT;
+    public static final int SHAPE_TYPE_ROUND = 0;
+    public static final int SHAPE_TYPE_RECTANGLE = 1;
+
+    protected int mWidth;
+    protected int mHeight;
     protected Paint mBackgroundPaint;
     protected int mShapeType;
     protected int mRadius;
@@ -51,7 +54,8 @@ public class UIBaseButton extends Button {
         if (isInEditMode()) return;
         final TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.UIButton);
-        mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, 1);
+        mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type,
+                SHAPE_TYPE_RECTANGLE);
         mRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius,
                 getResources().getDimensionPixelSize(R.dimen.ui_radius));
         int unpressedColor = typedArray.getColor(
@@ -67,16 +71,14 @@ public class UIBaseButton extends Button {
         this.setWillNotDraw(false);
         this.setDrawingCacheEnabled(true);
         this.setClickable(true);
-        if (unpressedColor != Color.TRANSPARENT) {
-            this.setBackgroundColor(Color.TRANSPARENT);
-        }
+        this.eraseOriginalBackgroundColor(unpressedColor);
     }
 
 
     @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        WIDTH = w;
-        HEIGHT = h;
+        mWidth = w;
+        mHeight = h;
     }
 
 
@@ -86,13 +88,65 @@ public class UIBaseButton extends Button {
             return;
         }
         if (mShapeType == 0) {
-            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, WIDTH / 2,
+            canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2,
                     mBackgroundPaint);
         } else {
             RectF rectF = new RectF();
-            rectF.set(0, 0, WIDTH, HEIGHT);
+            rectF.set(0, 0, mWidth, mHeight);
             canvas.drawRoundRect(rectF, mRadius, mRadius, mBackgroundPaint);
         }
         super.onDraw(canvas);
+    }
+
+
+    protected void eraseOriginalBackgroundColor(int color) {
+        if (color != Color.TRANSPARENT) {
+            this.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+
+    /**
+     * Set the unpressed color.
+     *
+     * @param color the color of the background
+     */
+    public void setUnpressedColor(int color) {
+        mBackgroundPaint.setAlpha(Color.alpha(color));
+        mBackgroundPaint.setColor(color);
+        eraseOriginalBackgroundColor(color);
+        invalidate();
+    }
+
+
+    public int getShapeType() {
+        return mShapeType;
+    }
+
+
+    /**
+     * Set the shape type.
+     *
+     * @param shapeType SHAPE_TYPE_ROUND or SHAPE_TYPE_RECTANGLE
+     */
+    public void setShapeType(int shapeType) {
+        mShapeType = shapeType;
+        invalidate();
+    }
+
+
+    public int getRadius() {
+        return mRadius;
+    }
+
+
+    /**
+     * Set the radius if the shape type is SHAPE_TYPE_ROUND.
+     *
+     * @param radius by px.
+     */
+    public void setRadius(int radius) {
+        mRadius = radius;
+        invalidate();
     }
 }

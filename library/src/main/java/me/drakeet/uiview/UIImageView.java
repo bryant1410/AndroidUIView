@@ -37,9 +37,9 @@ import android.widget.ImageView;
  */
 public class UIImageView extends ImageView {
 
-    private int WIDTH;
-    private int HEIGHT;
-    private int PAINT_ALPHA = 48;
+    private int mWidth;
+    private int mHeight;
+    private int mPaintAlpha = 48;
 
     private int mPressedColor;
     private Paint mPaint;
@@ -70,8 +70,8 @@ public class UIImageView extends ImageView {
                 R.styleable.UIButton);
         mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed,
                 getResources().getColor(R.color.color_pressed));
-        PAINT_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed,
-                PAINT_ALPHA);
+        mPaintAlpha = typedArray.getInteger(R.styleable.UIButton_alpha_pressed,
+                mPaintAlpha);
         mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, 1);
         mRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius,
                 getResources().getDimensionPixelSize(R.dimen.ui_radius));
@@ -89,8 +89,8 @@ public class UIImageView extends ImageView {
 
     @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        WIDTH = w;
-        HEIGHT = h;
+        mWidth = w;
+        mHeight = h;
     }
 
 
@@ -98,10 +98,11 @@ public class UIImageView extends ImageView {
         super.onDraw(canvas);
         if (mPaint == null) return;
         if (mShapeType == 0) {
-            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, WIDTH / 2.1038f, mPaint);
+            canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2.1038f,
+                    mPaint);
         } else {
             RectF rectF = new RectF();
-            rectF.set(0, 0, WIDTH, HEIGHT);
+            rectF.set(0, 0, mWidth, mHeight);
             canvas.drawRoundRect(rectF, mRadius, mRadius, mPaint);
         }
     }
@@ -110,7 +111,7 @@ public class UIImageView extends ImageView {
     @Override public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                mPaint.setAlpha(PAINT_ALPHA);
+                mPaint.setAlpha(mPaintAlpha);
                 invalidate();
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -120,5 +121,21 @@ public class UIImageView extends ImageView {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+
+    public int getPressedColor() {
+        return mPressedColor;
+    }
+
+
+    /**
+     * Set the pressed color.
+     *
+     * @param pressedColor pressed color
+     */
+    public void setPressedColor(int pressedColor) {
+        mPaint.setColor(mPressedColor);
+        invalidate();
     }
 }

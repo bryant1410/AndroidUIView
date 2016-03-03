@@ -88,11 +88,11 @@ public class UIButton extends UIBaseButton {
     @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mShapeType == 0) {
-            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, WIDTH / 2.1038f,
+            canvas.drawCircle(mWidth / 2, mHeight / 2, mWidth / 2.1038f,
                     mPressedPaint);
         } else {
             RectF rectF = new RectF();
-            rectF.set(0, 0, WIDTH, HEIGHT);
+            rectF.set(0, 0, mWidth, mHeight);
             canvas.drawRoundRect(rectF, mRadius, mRadius, mPressedPaint);
         }
     }
@@ -111,5 +111,21 @@ public class UIButton extends UIBaseButton {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+
+    public int getPressedColor() {
+        return mPressedColor;
+    }
+
+
+    /**
+     * Set the pressed color.
+     *
+     * @param pressedColor pressed color
+     */
+    public void setPressedColor(int pressedColor) {
+        mPressedPaint.setColor(mPressedColor);
+        invalidate();
     }
 }

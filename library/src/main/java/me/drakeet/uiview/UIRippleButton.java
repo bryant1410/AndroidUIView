@@ -43,7 +43,7 @@ public class UIRippleButton extends UIBaseButton {
 
     private int mRippleAlpha;
     //private final static int HALF_ALPHA = 127;
-    private final static int RIPPLR_ALPHE = 47;
+    private final static int RIPPLR_ALPHA = 47;
     private final static int MSG_DRAW_COMPLETE = 101;
 
 
@@ -74,7 +74,7 @@ public class UIRippleButton extends UIBaseButton {
         mRippleColor = typedArray.getColor(R.styleable.UIButton_ripple_color,
                 getResources().getColor(R.color.ripple_color));
         mRippleAlpha = typedArray.getInteger(R.styleable.UIButton_ripple_alpha,
-                RIPPLR_ALPHE);
+                RIPPLR_ALPHA);
         mRippleDuration = typedArray.getInteger(
                 R.styleable.UIButton_ripple_duration, 1000);
         mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, 1);
@@ -132,10 +132,10 @@ public class UIRippleButton extends UIBaseButton {
             mPath.reset();
             canvas.clipPath(mPath);
             if (mShapeType == 0) {
-                mPath.addCircle(rbX / 2, rbY / 2, WIDTH / 2,
+                mPath.addCircle(rbX / 2, rbY / 2, mWidth / 2,
                         Path.Direction.CCW);
             } else {
-                mRectF.set(0, 0, WIDTH, HEIGHT);
+                mRectF.set(0, 0, mWidth, mHeight);
                 mPath.addRoundRect(mRectF, mRoundRadius, mRoundRadius,
                         Path.Direction.CCW);
             }
@@ -169,5 +169,56 @@ public class UIRippleButton extends UIBaseButton {
             mTimer.cancel();
         }
         mRippleRadius = 0;
+    }
+
+
+    public int getRoundRadius() {
+        return mRoundRadius;
+    }
+
+
+    public void setRoundRadius(int roundRadius) {
+        mRoundRadius = roundRadius;
+        invalidate();
+    }
+
+
+    public int getRippleColor() {
+        return mRippleColor;
+    }
+
+
+    public void setRippleColor(int rippleColor) {
+        mRippleColor = rippleColor;
+    }
+
+
+    public int getRippleDuration() {
+        return mRippleDuration;
+    }
+
+
+    public void setRippleDuration(int rippleDuration) {
+        mRippleDuration = rippleDuration;
+    }
+
+
+    public int getRippleRadius() {
+        return mRippleRadius;
+    }
+
+
+    public void setRippleRadius(int rippleRadius) {
+        mRippleRadius = rippleRadius;
+    }
+
+
+    public int getRippleAlpha() {
+        return mRippleAlpha;
+    }
+
+
+    public void setRippleAlpha(int rippleAlpha) {
+        mRippleAlpha = rippleAlpha;
     }
 }
