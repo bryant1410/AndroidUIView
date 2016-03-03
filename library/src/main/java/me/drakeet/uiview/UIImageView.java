@@ -46,28 +46,35 @@ public class UIImageView extends ImageView {
     private int mShapeType;
     private int mRadius;
 
+
     public UIImageView(Context context) {
         super(context);
     }
+
 
     public UIImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
+
     public UIImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
+
     private void init(final Context context, final AttributeSet attrs) {
-        if (isInEditMode())
-            return;
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UIButton);
-        mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed, getResources().getColor(R.color.color_pressed));
-        PAINT_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed, PAINT_ALPHA);
+        if (isInEditMode()) return;
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.UIButton);
+        mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed,
+                getResources().getColor(R.color.color_pressed));
+        PAINT_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed,
+                PAINT_ALPHA);
         mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, 1);
-        mRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius, getResources().getDimensionPixelSize(R.dimen.ui_radius));
+        mRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius,
+                getResources().getDimensionPixelSize(R.dimen.ui_radius));
         typedArray.recycle();
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
@@ -79,19 +86,19 @@ public class UIImageView extends ImageView {
         this.setClickable(true);
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+
+    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         WIDTH = w;
         HEIGHT = h;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mPaint == null) return;
         if (mShapeType == 0) {
-            canvas.drawCircle(WIDTH/2, HEIGHT/2, WIDTH/2.1038f, mPaint);
+            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, WIDTH / 2.1038f, mPaint);
         } else {
             RectF rectF = new RectF();
             rectF.set(0, 0, WIDTH, HEIGHT);
@@ -99,8 +106,8 @@ public class UIImageView extends ImageView {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+
+    @Override public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mPaint.setAlpha(PAINT_ALPHA);
@@ -114,5 +121,4 @@ public class UIImageView extends ImageView {
         }
         return super.onTouchEvent(event);
     }
-
 }

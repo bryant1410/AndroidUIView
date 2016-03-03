@@ -31,12 +31,11 @@ public class UIRippleButton extends UIBaseButton {
     private Path mPath;
     private Timer mTimer;
     private TimerTask mTask;
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
 
-        @Override
-        public void handleMessage(Message msg) {
+        @Override public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == MSG_DRAW_COMPLETE){
+            if (msg.what == MSG_DRAW_COMPLETE) {
                 invalidate();
             }
         }
@@ -47,37 +46,40 @@ public class UIRippleButton extends UIBaseButton {
     private final static int RIPPLR_ALPHE = 47;
     private final static int MSG_DRAW_COMPLETE = 101;
 
-    public UIRippleButton(Context context){
+
+    public UIRippleButton(Context context) {
         super(context);
     }
 
-    public UIRippleButton(Context context, AttributeSet attrs){
+
+    public UIRippleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public UIRippleButton(Context context, AttributeSet attrs, int defStyleAttr){
+
+    public UIRippleButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
 
-    protected void init(final Context context, final AttributeSet attrs){
+
+    protected void init(final Context context, final AttributeSet attrs) {
         super.init(context, attrs);
-        if (isInEditMode()){
+        if (isInEditMode()) {
             return;
         }
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UIButton);
-        mRippleColor = typedArray.getColor(
-                R.styleable.UIButton_ripple_color, getResources().getColor(R.color.ripple_color)
-        );
-        mRippleAlpha = typedArray.getInteger(
-                R.styleable.UIButton_ripple_alpha, RIPPLR_ALPHE
-        );
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.UIButton);
+        mRippleColor = typedArray.getColor(R.styleable.UIButton_ripple_color,
+                getResources().getColor(R.color.ripple_color));
+        mRippleAlpha = typedArray.getInteger(R.styleable.UIButton_ripple_alpha,
+                RIPPLR_ALPHE);
         mRippleDuration = typedArray.getInteger(
-                R.styleable.UIButton_ripple_duration, 1000
-        );
+                R.styleable.UIButton_ripple_duration, 1000);
         mShapeType = typedArray.getInt(R.styleable.UIButton_shape_type, 1);
-        mRoundRadius = typedArray.getDimensionPixelSize(R.styleable.UIButton_radius,
+        mRoundRadius = typedArray.getDimensionPixelSize(
+                R.styleable.UIButton_radius,
                 getResources().getDimensionPixelSize(R.dimen.ui_radius));
         typedArray.recycle();
         mRipplePaint = new Paint();
@@ -90,8 +92,8 @@ public class UIRippleButton extends UIBaseButton {
         pointY = pointX = -1;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mRipplePaint == null) {
             return;
@@ -99,9 +101,9 @@ public class UIRippleButton extends UIBaseButton {
         drawFillCircle(canvas);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN){
+
+    @Override public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             pointX = event.getX();
             pointY = event.getY();
             onStartDrawRipple();
@@ -109,14 +111,15 @@ public class UIRippleButton extends UIBaseButton {
         return super.onTouchEvent(event);
     }
 
-    /** Draw ripple effect*/
-    private void drawFillCircle(Canvas canvas){
-        if (canvas != null && pointX >= 0 && pointY >= 0){
+
+    /** Draw ripple effect */
+    private void drawFillCircle(Canvas canvas) {
+        if (canvas != null && pointX >= 0 && pointY >= 0) {
             int rbX = canvas.getWidth();
             int rbY = canvas.getHeight();
-            float x_max =  Math.max(pointX, Math.abs(rbX - pointX));
-            float y_max =  Math.max(pointY, Math.abs(rbY - pointY));
-            float longDis = (float) Math.sqrt(x_max*x_max+y_max*y_max);
+            float x_max = Math.max(pointX, Math.abs(rbX - pointX));
+            float y_max = Math.max(pointY, Math.abs(rbY - pointY));
+            float longDis = (float) Math.sqrt(x_max * x_max + y_max * y_max);
             if (mRippleRadius > longDis) {
                 onCompleteDrawRipple();
                 return;
@@ -125,14 +128,16 @@ public class UIRippleButton extends UIBaseButton {
             mRippleRadius += drawSpeed;
 
             canvas.save();
-//            canvas.translate(0, 0);//保持原点
+            //            canvas.translate(0, 0);//保持原点
             mPath.reset();
             canvas.clipPath(mPath);
-            if (mShapeType == 0){
-                mPath.addCircle(rbX / 2, rbY / 2, WIDTH/2, Path.Direction.CCW);
-            }else {
+            if (mShapeType == 0) {
+                mPath.addCircle(rbX / 2, rbY / 2, WIDTH / 2,
+                        Path.Direction.CCW);
+            } else {
                 mRectF.set(0, 0, WIDTH, HEIGHT);
-                mPath.addRoundRect(mRectF, mRoundRadius, mRoundRadius, Path.Direction.CCW);
+                mPath.addRoundRect(mRectF, mRoundRadius, mRoundRadius,
+                        Path.Direction.CCW);
             }
             canvas.clipPath(mPath, Region.Op.REPLACE);
             canvas.drawCircle(pointX, pointY, mRippleRadius, mRipplePaint);
@@ -140,12 +145,12 @@ public class UIRippleButton extends UIBaseButton {
         }
     }
 
-    /** Start draw ripple effect*/
-    private void onStartDrawRipple(){
+
+    /** Start draw ripple effect */
+    private void onStartDrawRipple() {
         onCompleteDrawRipple();
         mTask = new TimerTask() {
-            @Override
-            public void run() {
+            @Override public void run() {
                 mHandler.sendEmptyMessage(MSG_DRAW_COMPLETE);
             }
         };
@@ -153,11 +158,12 @@ public class UIRippleButton extends UIBaseButton {
         mTimer.schedule(mTask, 0, 30);
     }
 
-    /** Stop draw ripple effect*/
-    private void onCompleteDrawRipple(){
+
+    /** Stop draw ripple effect */
+    private void onCompleteDrawRipple() {
         mHandler.removeMessages(MSG_DRAW_COMPLETE);
-        if (mTimer != null){
-            if (mTask != null){
+        if (mTimer != null) {
+            if (mTask != null) {
                 mTask.cancel();
             }
             mTimer.cancel();

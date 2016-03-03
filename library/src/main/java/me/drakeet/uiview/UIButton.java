@@ -42,32 +42,39 @@ public class UIButton extends UIBaseButton {
     private Paint mPressedPaint;
     private int mPressedColor;
 
+
     public UIButton(Context context) {
         super(context);
     }
 
+
     public UIButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-		init(context, attrs);
+        init(context, attrs);
     }
+
 
     public UIButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-		init(context, attrs);
+        init(context, attrs);
     }
+
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public UIButton(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-		init(context, attrs);
+        init(context, attrs);
     }
 
-    @Override
-    protected void init(Context context, AttributeSet attrs) {
+
+    @Override protected void init(Context context, AttributeSet attrs) {
         super.init(context, attrs);
-        final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UIButton);
-        COVER_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed, COVER_ALPHA);
-        mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed, getResources().getColor(R.color.color_pressed));
+        final TypedArray typedArray = context.obtainStyledAttributes(attrs,
+                R.styleable.UIButton);
+        COVER_ALPHA = typedArray.getInteger(R.styleable.UIButton_alpha_pressed,
+                COVER_ALPHA);
+        mPressedColor = typedArray.getColor(R.styleable.UIButton_color_pressed,
+                getResources().getColor(R.color.color_pressed));
         typedArray.recycle();
 
         mPressedPaint = new Paint();
@@ -77,11 +84,12 @@ public class UIButton extends UIBaseButton {
         mPressedPaint.setAntiAlias(true);
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
+
+    @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mShapeType == 0) {
-            canvas.drawCircle(WIDTH/2, HEIGHT/2, WIDTH/2.1038f, mPressedPaint);
+            canvas.drawCircle(WIDTH / 2, HEIGHT / 2, WIDTH / 2.1038f,
+                    mPressedPaint);
         } else {
             RectF rectF = new RectF();
             rectF.set(0, 0, WIDTH, HEIGHT);
@@ -89,8 +97,8 @@ public class UIButton extends UIBaseButton {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+
+    @Override public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mPressedPaint.setAlpha(COVER_ALPHA);
@@ -104,5 +112,4 @@ public class UIButton extends UIBaseButton {
         }
         return super.onTouchEvent(event);
     }
-
 }
