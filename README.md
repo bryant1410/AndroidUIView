@@ -23,7 +23,7 @@ Hope you will like it :)
 ####Gradle & Maven
 ```groovy
 dependencies {
-    compile 'me.drakeet.uiview:androiduiview:1.1.3'
+    compile 'me.drakeet.uiview:androiduiview:1.1.5'
 }
 ```
 
@@ -31,7 +31,7 @@ dependencies {
 <dependency>
     <groupId>me.drakeet.uiview</groupId>
     <artifactId>androiduiview</artifactId>
-    <version>1.1.3</version>
+    <version>1.1.5</version>
 </dependency>
 ```
 
