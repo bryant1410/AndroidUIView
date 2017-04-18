@@ -20,7 +20,7 @@ Hope you will like it :)
 
 ## Usage
 ### Step 1
-####Gradle & Maven
+#### Gradle & Maven
 ```groovy
 dependencies {
     compile 'me.drakeet.uiview:androiduiview:1.1.5'
@@ -36,7 +36,7 @@ dependencies {
 ```
 
 
-####Or
+#### Or
 
 Import the library, then add it to your `/settings.gradle` and `/app/build.gradle`, if you don't know how to do it, you can read my blog for help.
 
